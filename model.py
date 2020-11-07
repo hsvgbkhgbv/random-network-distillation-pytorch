@@ -233,3 +233,42 @@ class RNDModel(nn.Module):
         predict_feature = self.predictor(next_obs)
 
         return predict_feature, target_feature
+
+
+class TerminationPolicy(RNDModel):
+    """jianhong
+    implement the termination policy for signaller
+    """
+    def __init__(self, input_size, output_size):
+        super(TerminationPolicy, self).__init__(input_size=input_size, output_size=output_size)
+
+
+class SwitchPolicy(nn.Module):
+    """jianhong
+    implement a switch policy to decide whether the intrinsic reward should be activated
+    """
+    def __init__(self, input_size, output_size):
+        super(SwitchPolicy, self).__init__()
+
+
+class Signaller(nn.Module):
+    """jianhong
+    implement a signaller, i.e. player 2 in paper
+    """
+    def __init__(self, input_size, output_size):
+        super(Signaller, self).__init__()
+        # the policy to decide whether the activation of switch-on should be terminated or not
+        self.termaination_policy = TerminationPolicy(input_size=input_size, output_size=output_size)
+
+        # the policy to decide whether the activation of switch-on should happen
+        self.switch_policy = SwitchPolicy(input_size=input_size, output_size=output_size)
+        
+
+class PotentialFunction(nn.Module):
+    """jianhong
+    implement a potential function, i.e. for constructing extra reward for principle_agent
+    """
+    def __init__(self, input_size, output_size):
+        pass
+
+
